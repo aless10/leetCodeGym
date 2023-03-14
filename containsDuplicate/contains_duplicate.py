@@ -1,10 +1,8 @@
-from collections import defaultdict
-
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        d = defaultdict(int)
+        found = set()
         for num in nums:
-            d[num] += 1
-            if d[num] > 1:
+            if num in found:
                 return True
+            found.add(num)
         return False
