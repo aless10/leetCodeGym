@@ -1,32 +1,20 @@
-use std::collections::HashMap;
+from collections import defaultdict
 
-impl Solution {
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
 
-    pub fn counter(s: String) -> HashMap<char, i32> {
-        let mut s_map: HashMap<char, i32> = HashMap::new();
-        for c in s.chars() {
-            let x = s_map.entry(c).or_insert(0);
-            *x += 1
-        }
-        return s_map;
-    }
+        s_counter = defaultdict(int)
+        for letter in s:
+            s_counter[letter] += 1
 
-    pub fn is_anagram(s: String, t: String) -> bool {
-        if (s.len() != t.len()) {
-            return false;
-        }
+        t_counter = defaultdict(int)
+        for letter in t:
+            t_counter[letter] += 1
 
-        let mut s_map: HashMap<char, i32> = Solution::counter(s);
-        let mut t_map: HashMap<char, i32> = Solution::counter(t);
-
-        for (key, val) in t_map.iter() {
-            let s_value = s_map.get(&key);
-            if (s_value != Some(val)) {
-                return false;
-            }
-        }
-
-        return true;
         
-    }
-}
+        for letter, count in t_counter.items():
+            if letter not in s_counter or s_counter[letter] != count:
+                return False
+        return True
